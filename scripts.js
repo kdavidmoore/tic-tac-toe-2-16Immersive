@@ -62,21 +62,24 @@ function checkWin() {
 				playerTwoRowCount++;
 			}
 		}
-		if (playerOneRowCount === 3 || playerTwoRowCount === 3)  {
-			gameOver(thisWinCombination);
-		}
+	if (playerOneRowCount === 3 || playerTwoRowCount === 3) {
+		gameOver(thisWinCombination);
+		break; } 
 	}
 }
 
 function gameOver(combo) {
 	var gameHeader = document.getElementById('game-header');
+	var theWinner = document.getElementById(combo[0]).innerHTML;
 	for (i=0;i<combo.length;i++) {
 		document.getElementById(combo[i]).classList.add('winner');
-		if (combo[i].indexOf('a') > -1) {
+	}
+	if (theWinner === "X") {
+			gameHeader.className = 'player-one';
 			gameHeader.innerHTML = "Player 1 won the game!";
-		} else if (combo[i].indexOf('b') > -1) {
+	} else if (theWinner === "O") {
+			gameHeader.className = 'player-two';
 			gameHeader.innerHTML = "Player 2 won the game!";
-		}
 	}
 }
 
