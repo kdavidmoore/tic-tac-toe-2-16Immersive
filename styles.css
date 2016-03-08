@@ -15,12 +15,12 @@
     overflow: hidden;
     margin-bottom: 5%;
 }
+
 #row3{
 	margin-bottom: 0px;
 }
 
-
-.square{
+.square {
 	display: inline-block;
 	width: 30%;
 	background: white;
@@ -29,6 +29,7 @@
 	font-size: 80px;
 	float: left;
 	border: none;
+	outline: none;
 }
 
 .left{
@@ -38,23 +39,27 @@
 #game-header{
 	font-size: 30px;
 	font-weight: bold;
-	background-color: green;
+	background-color: #009999;
 	color: white;
 	border-radius: 10px;
 	width: 60%;
 	text-align: center;
 	margin: 0 auto 25px;
+	padding: 10px;
 }
 
 #game-header.red{
-	background-color: #ff0000;
+	background-color: #cc0000;
 }
 
 #game-header.player-one{
-	background-color: green;
+	background-color: #009999;
 }
 
 #game-header.player-two{
-	background-color: #0000ff;
+	background-color: #3333cc;
 }
 
+.winner {
+	background-color: blue;
+}
