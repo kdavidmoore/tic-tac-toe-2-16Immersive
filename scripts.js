@@ -48,7 +48,7 @@ function checkWin() {
 	// if rowCount gets to 3, then we have a winner
 	var playerOneRowCount = 0;
 	var playerTwoRowCount = 0;
-	var thisWinCombination;
+	var thisWinCombination = [];
 	// loop through all winning combinations
 	for (i=0; i<winners.length; i++) {
 		playerOneRowCount = 0;
@@ -64,7 +64,8 @@ function checkWin() {
 		}
 	if (playerOneRowCount === 3 || playerTwoRowCount === 3) {
 		gameOver(thisWinCombination);
-		break; } 
+		break; // we need to break out of the outer for-loop when one of the row count variables gets to 3, otherwise the counter will reset
+		} 
 	}
 }
 
@@ -80,6 +81,26 @@ function gameOver(combo) {
 	} else if (theWinner === "O") {
 			gameHeader.className = 'player-two';
 			gameHeader.innerHTML = "Player 2 won the game!";
+	}
+}
+
+function startOver() {
+	// returns to Player 1
+	whosTurn = 1;
+	var gameHeader = document.getElementById("game-header");
+	gameHeader.className = 'player-one';
+	gameHeader.innerHTML = "player 1's turn";
+	
+	// clears all squares
+	playerOneMarkings = [];
+	playerTwoMarkings = [];
+	var squares = ['a1', 'a2', 'a3', 'b1', 'b2', 'b3', 'c1', 'c2', 'c3'];
+	var resetSquares = [];
+	for (i = 0; i < squares.length; i++) {
+		resetSquares.push(document.getElementById(squares[i]));
+		resetSquares[i].innerHTML = "";
+		resetSquares[i].classList.remove('winner');
+		resetSquares[i].classList.add('empty');
 	}
 }
 

@@ -1,4 +1,9 @@
+body {
+	font-family: sans-serif;
+}
+
 #game-wrapper{
+	margin: auto;
 	padding: 30px;
 }
 
@@ -61,5 +66,23 @@
 }
 
 .winner {
-	background-color: yellow;
+	background-color: #dedede;
+}
+
+#start-over {
+	clear: both;
+	margin: auto;
+	font-weight: bold;
+	background-color: #FF4500;
+	width: 120px;
+	color: #fff;
+	font-size: 18px;
+	border: none;
+	border-radius: 10px;
+	margin-bottom: 10px;
+	padding: 10px;
+}
+
+#start-over:hover {
+	cursor: pointer;
 }
