@@ -96,7 +96,7 @@ function gameOver(combo) {
 	}
 	if (theWinner === "X") {
 			gameHeader.className = 'player-one';
-			gameHeader.innerHTML = "You won the game!";
+			gameHeader.innerHTML = 'You won the game!';
 	} else if (theWinner === "O") {
 			gameHeader.className = 'player-two';
 			gameHeader.innerHTML = "The computer won the game!";
@@ -105,21 +105,18 @@ function gameOver(combo) {
 
 function startOver() {
 	// returns to Player 1
-	/* whosTurn = 1; */
 	var gameHeader = document.getElementById("game-header");
 	gameHeader.className = 'player-one';
-	gameHeader.innerHTML = "your turn";
+	gameHeader.innerHTML = 'your turn';
 	
 	// clears all squares
 	playerOneMarkings = [];
 	playerTwoMarkings = [];
-	var squares = ['a1', 'a2', 'a3', 'b1', 'b2', 'b3', 'c1', 'c2', 'c3'];
-	var resetSquares = [];
-	for (i = 0; i < squares.length; i++) {
-		resetSquares.push(document.getElementById(squares[i]));
-		resetSquares[i].innerHTML = "";
-		resetSquares[i].classList.remove('winner');
-		resetSquares[i].classList.add('empty');
+	var allSquares = document.getElementsByClassName('square');
+	for (i=0; i<allSquares.length; i++) {
+		allSquares[i].innerHTML = '';
+		allSquares[i].classList.remove('winner');
+		allSquares[i].classList.add('empty');
 	}
 }
 
