@@ -34,7 +34,8 @@ function chooseNumPlayers(numPlayers) {
 		buttons[i].disabled = false;
 		/* buttons[i].style.pointerEvents = 'auto'; */
 	}
-	console.log(numPlayers);
+	document.getElementById('one-player').disabled = true;
+	document.getElementById('two-players').disabled = true;
 }
 
 function addSymbol(element) {
@@ -52,6 +53,8 @@ function addSymbol(element) {
 			gameHeader.classList.add('player-two');
 			gameHeader.classList.remove('player-one');
 			checkWin();
+			if (checkWin() === true) {
+				return; }
 			if (computer) {
 			computersTurn(); }
 	} else if (whosTurn === 2) {
@@ -123,19 +126,28 @@ function gameOver(combo) {
 		document.getElementById(combo[i]).classList.add('winner');
 	}
 	if (theWinner === "X") {
-			gameHeader.className = 'player-one';
-			gameHeader.innerHTML = 'You won the game!';
+			gameHeader.classList.remove('player-two');
+			gameHeader.classList.add('player-one');
+			if (computer) {
+				gameHeader.innerHTML = "You beat the computer!";
+			} else {
+				gameHeader.innerHTML = "Player one won the game!";
+			}
 	} else if (theWinner === "O") {
-			gameHeader.className = 'player-two';
-			gameHeader.innerHTML = "The computer won the game!";
+			gameHeader.classList.remove('player-one');
+			gameHeader.classList.add('player-two');
+			if (computer) {
+				gameHeader.innerHTML = "The computer beat you!";
+			} else {
+				gameHeader.innerHTML = "Player two won the game!";
+			}
 	}
 	var buttons = document.getElementsByTagName("button");
 	for (i=0; i<buttons.length; i++) {
 		buttons[i].disabled = true;
-		/* buttons[i].style.pointerEvents = 'none'; */
+		/* buttons[i].style.pointerEvents = 'none'; we don't need this */
 	}
-	var starOver = document.getElementById('start-over');
-	starOver.disabled = false;
+	document.getElementById('start-over').disabled = false;
 }
 
 function startOver() {
@@ -156,11 +168,8 @@ function startOver() {
 		allSquares[i].classList.remove('playerTwoHasThisSpace');
 		allSquares[i].classList.add('empty');
 	}
-	var headerButtons = document.getElementsByClassName("num-players");
-	for (i=0; i<headerButtons.length; i++) {
-		headerButtons[i].disabled = false;
-		/* headerButtons[i].style.pointerEvents = 'auto'; */
-	}
+	document.getElementById('one-player').disabled = false;
+	document.getElementById('two-players').disabled = false;
 }
 
 var squareWidth = document.getElementById('a1').clientWidth;
