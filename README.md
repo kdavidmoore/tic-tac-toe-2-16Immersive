@@ -2,7 +2,7 @@
 
 ## Class project and Homework for March 8, 2016 (Unit 1)
 
-This page presents a tic-tac-toe game written in HTML, CSS, and native JS. This version uses "AI" for Player 2. The homework was to build on the class project, adding a Reset ("Start Over") button.
+This page presents a tic-tac-toe game written in HTML, CSS, and native JS. The user is given a choice of single-player or two-player mode. In single player mode, you play against an algorithm that randomly chooses empty squares.
 
 ##Demo here
 

@@ -12,40 +12,68 @@ var winners = [
 /* var whosTurn = 1 */
 var playerOneMarkings = [];
 var playerTwoMarkings = [];
+var computer;
+var playerMode;
+var whosTurn = 1;
+
+function chooseNumPlayers(numPlayers) {
+	if (numPlayers === 1) {
+		computer = true;
+		playerMode = 1;
+	} else {
+		computer = false;
+		playerMode = 2;
+	}
+	// enable buttons
+	var gameHeader = document.getElementById('game-header')
+	gameHeader.innerHTML = "player one's turn";
+	gameHeader.classList.add('player-one');
+	gameHeader.classList.remove('player-two');
+	var buttons = document.getElementsByTagName("button");
+	for (i=0; i<buttons.length; i++) {
+		buttons[i].disabled = false;
+		/* buttons[i].style.pointerEvents = 'auto'; */
+	}
+	document.getElementById('one-player').disabled = true;
+	document.getElementById('two-players').disabled = true;
+}
 
 function addSymbol(element) {
 	var gameHeader = document.getElementById('game-header')
 	if (element.innerHTML == '') {
 		//It's X's turn. So, we have an empty square, and it's X's turn. Put an X in.
-		element.innerHTML = 'X';
-		/* whosTurn = 2;
-		gameHeader.innerHTML = "player 2's turn";
-		gameHeader.className = 'player-two'; */
-		//Get rid of class 'empty', and add who took the square
-		element.classList.remove('empty');
-		element.classList.add('playerOneHasThisSpace');
-		playerOneMarkings.push(element.id);
-		checkWin();
-		if (checkWin() === true) {
-			return;
-		} else {
-			computersTurn();
-		}
-	} /* else{
-		//It has to be O's turn. Put an O in.
+		if (whosTurn === 1) {
+			element.innerHTML = 'X';
+			element.classList.remove('empty');
+			element.classList.add('playerOneHasThisSpace');
+			playerOneMarkings.push(element.id);
+			whosTurn = 2;
+			gameHeader.innerHTML = '';
+			gameHeader.innerHTML = "player two's turn";
+			gameHeader.classList.add('player-two');
+			gameHeader.classList.remove('player-one');
+			checkWin();
+			if (checkWin() === true) {
+				return; }
+			if (computer) {
+			computersTurn(); }
+	} else if (whosTurn === 2) {
+		gameHeader.innerHTML = '';
+		gameHeader.innerHTML = "player one's turn";
+		gameHeader.classList.add('player-one');
+		gameHeader.classList.remove('player-two');
 		element.innerHTML = 'O';
-		whosTurn = 1;
-		gameHeader.innerHTML = "player 1's turn";
-		gameHeader.className = 'player-one';
 		element.classList.remove('empty');
 		element.classList.add('playerTwoHasThisSpace');
 		playerTwoMarkings.push(element.id);
-	} */
-	else {
+		whosTurn = 1;
+		checkWin();
+	} else {
 		gameHeader.innerHTML = "This box is taken.";
-		gameHeader.className = 'red';
+		gameHeader.className = 'red'; }
 	}
 }
+
 
 function computersTurn() {
 	var gameHeader = document.getElementById('game-header')
@@ -55,11 +83,14 @@ function computersTurn() {
 	console.log("random empty square: " + randomEmptySquare);
 	var element = emptySquares[randomEmptySquare];
 	element.innerHTML = 'O';
-	gameHeader.innerHTML = 'your turn';
-	gameHeader.className = 'player-one';
+	gameHeader.innerHTML = '';
+	gameHeader.innerHTML = "player one's turn";
+	gameHeader.classList.add('player-one');
+	gameHeader.classList.remove('player-two');
 	element.classList.remove('empty');
 	element.classList.add('playerTwoHasThisSpace');
 	playerTwoMarkings.push(element.id);
+	whosTurn = 1;
 	checkWin();
 }
 
@@ -95,20 +126,37 @@ function gameOver(combo) {
 		document.getElementById(combo[i]).classList.add('winner');
 	}
 	if (theWinner === "X") {
-			gameHeader.className = 'player-one';
-			gameHeader.innerHTML = 'You won the game!';
+			gameHeader.classList.remove('player-two');
+			gameHeader.classList.add('player-one');
+			if (computer) {
+				gameHeader.innerHTML = "You beat the computer!";
+			} else {
+				gameHeader.innerHTML = "Player one won the game!";
+			}
 	} else if (theWinner === "O") {
-			gameHeader.className = 'player-two';
-			gameHeader.innerHTML = "The computer won the game!";
+			gameHeader.classList.remove('player-one');
+			gameHeader.classList.add('player-two');
+			if (computer) {
+				gameHeader.innerHTML = "The computer beat you!";
+			} else {
+				gameHeader.innerHTML = "Player two won the game!";
+			}
 	}
+	var buttons = document.getElementsByTagName("button");
+	for (i=0; i<buttons.length; i++) {
+		buttons[i].disabled = true;
+		/* buttons[i].style.pointerEvents = 'none'; we don't need this */
+	}
+	document.getElementById('start-over').disabled = false;
 }
 
 function startOver() {
 	// returns to Player 1
+	whosTurn = 1
 	var gameHeader = document.getElementById("game-header");
-	gameHeader.className = 'player-one';
-	gameHeader.innerHTML = 'your turn';
-	
+	gameHeader.innerHTML = "player one's turn";
+	gameHeader.classList.add('player-one');
+	gameHeader.classList.remove('player-two');
 	// clears all squares
 	playerOneMarkings = [];
 	playerTwoMarkings = [];
@@ -116,8 +164,12 @@ function startOver() {
 	for (i=0; i<allSquares.length; i++) {
 		allSquares[i].innerHTML = '';
 		allSquares[i].classList.remove('winner');
+		allSquares[i].classList.remove('playerOneHasThisSpace');
+		allSquares[i].classList.remove('playerTwoHasThisSpace');
 		allSquares[i].classList.add('empty');
 	}
+	document.getElementById('one-player').disabled = false;
+	document.getElementById('two-players').disabled = false;
 }
 
 var squareWidth = document.getElementById('a1').clientWidth;
